@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+dist/
+.env
+.vite/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ASP.NET Core / .NET
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+appsettings.Development.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Others
+.DS_Store
