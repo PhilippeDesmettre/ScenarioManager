@@ -13,7 +13,22 @@ Créer un site permettant de :
 
 ---
 
+## ✅ Fonctionnalités disponibles
+
+- API REST `GET /api/scenarios` et `GET /api/scenarios/{id}`
+- Base de données SQLite opérationnelle avec EF Core
+- Données de test injectées automatiquement (seeding)
+- Swagger configuré pour tester l’API
+- Préparation du front-end avec Vue 3 + Vuetify
+
+
+---
+
 ## 📁 Structure du projet
+
+ProjetFullStackAppretissage/
+├── FrontEnd/ # Application Vue 3 + TypeScript + Vuetify (Vite)
+└── BackEnd/ # API ASP.NET Core (.NET 8 + EF Core + SQLite)
 
 ---
 

@@ -3,6 +3,13 @@
 Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
+## [1.3.0] - 2025-05-25
+### Ajouté
+- Modèle `DbContext` (`ApplicationDbContext`) avec EF Core et SQLite
+- Script de **seeding** pour données de test (`DbInitializer`)
+- Contrôleur API `ScenariosController` avec `GET /api/scenarios` et `GET /api/scenarios/{id}`
+- Sérialisation corrigée pour les relations circulaires (ReferenceHandler.IgnoreCycles)
+
 
 ## [1.2.0] - 2025-05-24
 ### Ajouté
