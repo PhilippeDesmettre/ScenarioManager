@@ -1,9 +1,11 @@
 ﻿using BackEnd.Data;
 using BackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BackEnd.Controllers
@@ -19,7 +21,7 @@ namespace BackEnd.Controllers
             _context = context;
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Scenario>> PostScenario(Scenario scenario)
         {
@@ -33,8 +35,7 @@ namespace BackEnd.Controllers
         }
 
 
-
-        // GET: api/scenarios
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Scenario>>> GetScenarios()
         {
@@ -45,7 +46,7 @@ namespace BackEnd.Controllers
             return Ok(scenarios);
         }
 
-        // GET: api/scenarios/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Scenario>> GetScenario(int id)
         {
@@ -59,6 +60,40 @@ namespace BackEnd.Controllers
             return Ok(scenario);
         }
 
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutScenario(int id, Scenario scenario)
+        {
+            if (id != scenario.Id)
+            {
+                return BadRequest();
+            }
+
+            // facultatif : remettre à jour l'heure si tu veux
+            // scenario.DateModification = DateTime.UtcNow;
+
+            _context.Entry(scenario).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Scenarios.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteScenario(int id)
         {

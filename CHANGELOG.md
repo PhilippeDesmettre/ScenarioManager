@@ -3,6 +3,21 @@
 Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
+## [1.5.0] - 26/05/2025
+### Ajouté
+- Authentification par JWT (register / login) côté back via `AuthController`
+- Ajout des modèles `AuthRequest` et `AuthResponse`
+- Génération du token JWT avec `Claim` de l’ID utilisateur
+- Middleware d’authentification et configuration dans `Startup.cs`
+- Interface de connexion/inscription dans `AuthPage.vue`
+- Ajout de la route `/` (page d’authentification) et redirection vers `/scenarios` si connecté
+- Protection des routes front via `meta.requiresAuth` + `router.beforeEach`
+- Centralisation des appels API via `api.ts` (avec injection automatique du token dans les headers)
+
+### Modifié
+- Correction des appels `axios` pour utiliser l’instance `api`
+- Mise à jour de `vite.config.ts` avec l’alias `@`
+
 ## [1.4.0] - 2025-05-25
 ### Ajouté
 - Création du composant `ScenarioList.vue` avec affichage depuis l'API

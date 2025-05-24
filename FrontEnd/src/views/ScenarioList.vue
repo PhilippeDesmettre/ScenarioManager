@@ -41,7 +41,10 @@
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="dialog = false">Annuler</v-btn>
-          <v-btn color="primary" @click="onCreate">Créer</v-btn>
+          <v-btn color="primary" @click="onSubmit">
+  {{ isEditing ? 'Sauvegarder' : 'Créer' }}
+</v-btn>
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -50,7 +53,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import axios from 'axios'
+import api from '@/api'
 
 interface Scenario {
   id?: number
@@ -65,6 +68,8 @@ export default defineComponent({
   setup() {
     const scenarios = ref<Scenario[]>([])
     const dialog = ref(false)
+    const isEditing = ref(false)
+
 
     const newScenario = ref<Scenario>({
       titre: '',
@@ -74,34 +79,41 @@ export default defineComponent({
 
     const fetchScenarios = async () => {
       try {
-        const api = import.meta.env.VITE_API_BASE_URL
-        const response = await axios.get(`${api}/scenarios`)
+        const response = await api.get(`/scenarios`)
         scenarios.value = response.data
       } catch (error) {
         console.error('Erreur lors du chargement des scénarios :', error)
       }
     }
 
-    const onCreate = async () => {
-      const api = import.meta.env.VITE_API_BASE_URL
-      try {
-        await axios.post(`${api}/scenarios`, newScenario.value)
-        dialog.value = false
-        newScenario.value = { titre: '', genre: '', auteur: '' }
-        await fetchScenarios()
-      } catch (error) {
-        console.error('Erreur lors de la création :', error)
-      }
+    const onSubmit = async () => {
+  try {
+    if (isEditing.value && newScenario.value.id) {
+      await api.put(`/scenarios/${newScenario.value.id}`, newScenario.value)
+    } else {
+      await api.post(`/scenarios`, newScenario.value)
     }
+
+    dialog.value = false
+    isEditing.value = false
+    newScenario.value = { titre: '', genre: '', auteur: '' }
+    await fetchScenarios()
+  } catch (error) {
+    console.error('Erreur lors de la soumission :', error)
+  }
+}
+
 
     const onModifier = (scenario: Scenario) => {
-      console.log('Modifier', scenario)
-    }
+  newScenario.value = { ...scenario }
+  isEditing.value = true
+  dialog.value = true
+}
+
 
     const onSupprimer = async (id: number) => {
-      const api = import.meta.env.VITE_API_BASE_URL
       if (confirm('Confirmer la suppression ?')) {
-        await axios.delete(`${api}/scenarios/${id}`)
+        await api.delete(`/scenarios/${id}`)
         await fetchScenarios()
       }
     }
@@ -115,10 +127,11 @@ export default defineComponent({
       scenarios,
       dialog,
       newScenario,
+      isEditing,
       formatDate,
       onSupprimer,
       onModifier,
-      onCreate
+      onSubmit,
     }
   },
 })

@@ -1,10 +1,13 @@
+using BackEnd.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using BackEnd.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 namespace BackEnd
@@ -44,6 +47,23 @@ namespace BackEnd
                     Version = "v1"
                 });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                 .AddJwtBearer(options =>
+                {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = Configuration["Jwt:Issuer"],
+            ValidAudience = Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]!))
+                    };
+                });
             services.AddSwaggerGen(); // Suffisant pour Swagger dans ce modèle
             services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseSqlite("Data Source=scenarios.db"));
@@ -58,7 +78,7 @@ namespace BackEnd
                 DbInitializer.Initialize(context);
             }
 
-                if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -67,6 +87,9 @@ namespace BackEnd
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Scénarios v1");
                     c.RoutePrefix = "swagger";
                 });
+                app.UseAuthentication();
+                app.UseAuthorization();
+
 
             }
 
