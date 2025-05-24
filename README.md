@@ -1,12 +1,15 @@
-# Projet FullStack d'Apprentissage : Scénarios 🎬
+# Projet FullStack Manager de Scénarios 🎬
 
 Ce projet est une application web fullstack développée avec :
+
 - **ASP.NET Core Web API** pour le back-end (C#)
 - **Vue.js 3 + TypeScript + Vuetify** pour le front-end
 - **SQLite** (prochainement) pour la base de données
 
 ## 🎯 Objectif
+
 Créer un site permettant de :
+
 - Lister, créer, modifier des scénarios (titre, genre, auteur, etc.)
 - Gérer plusieurs utilisateurs avec authentification
 - Associer chaque scénario à un utilisateur
@@ -21,8 +24,6 @@ Créer un site permettant de :
 - 🧭 Routage Vue 3 (`/scenarios`) avec Vue Router
 - 🔗 Communication front/back via Axios + Vite env
 - ⚙️ Back-end .NET Core + EF Core + SQLite + Swagger
-
-
 
 ---
 
