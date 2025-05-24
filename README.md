@@ -15,11 +15,13 @@ Créer un site permettant de :
 
 ## ✅ Fonctionnalités disponibles
 
-- API REST `GET /api/scenarios` et `GET /api/scenarios/{id}`
-- Base de données SQLite opérationnelle avec EF Core
-- Données de test injectées automatiquement (seeding)
-- Swagger configuré pour tester l’API
-- Préparation du front-end avec Vue 3 + Vuetify
+- 🎬 Affichage dynamique de scénarios depuis l’API
+- ➕ Ajout de scénario via formulaire `v-dialog`
+- 🗑️ Suppression de scénario avec confirmation
+- 🧭 Routage Vue 3 (`/scenarios`) avec Vue Router
+- 🔗 Communication front/back via Axios + Vite env
+- ⚙️ Back-end .NET Core + EF Core + SQLite + Swagger
+
 
 
 ---

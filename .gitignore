@@ -1,3 +1,7 @@
+# Visual Studio
+.vs/
+
+
 # Node.js
 node_modules/
 dist/

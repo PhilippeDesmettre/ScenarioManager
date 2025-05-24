@@ -1,16 +1,17 @@
 <template>
-  <div id="app">
-    <TaskList />
-  </div>
+  <v-app>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
+
+
 <script lang="ts">
-import TaskList from './components/TaskList.vue'
 
 export default {
   name: 'App',
-  components: {
-    TaskList
-  }
+
 }
 </script>

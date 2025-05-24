@@ -10,7 +10,6 @@
         <h1>Bienvenue dans mon app Vuetify</h1>
         <v-btn color="primary">Bouton Vuetify</v-btn>
       </v-container>
-
   </div>
 </template>
 

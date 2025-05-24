@@ -2,6 +2,7 @@
 using BackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,6 +18,21 @@ namespace BackEnd.Controllers
         {
             _context = context;
         }
+
+
+        [HttpPost]
+        public async Task<ActionResult<Scenario>> PostScenario(Scenario scenario)
+        {
+            scenario.DateCreation = DateTime.UtcNow;
+            scenario.UtilisateurId = 1;
+
+            _context.Scenarios.Add(scenario);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetScenario), new { id = scenario.Id }, scenario);
+        }
+
+
 
         // GET: api/scenarios
         [HttpGet]
@@ -42,5 +58,22 @@ namespace BackEnd.Controllers
 
             return Ok(scenario);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteScenario(int id)
+        {
+            var scenario = await _context.Scenarios.FindAsync(id);
+            if (scenario == null)
+            {
+                return NotFound();
+            }
+
+            _context.Scenarios.Remove(scenario);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
     }
 }

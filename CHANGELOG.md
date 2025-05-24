@@ -3,6 +3,18 @@
 Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
+## [1.4.0] - 2025-05-25
+### Ajouté
+- Création du composant `ScenarioList.vue` avec affichage depuis l'API
+- Intégration de Vue Router avec route `/scenarios`
+- Ajout du bouton "Ajouter" et d’un `v-dialog` pour créer un scénario
+- Intégration de la suppression de scénarios via bouton 🗑️
+- API : ajout de la route `POST /api/scenarios` avec affectation d’un `UtilisateurId` par défaut
+
+### Corrigé
+- Erreur 500 lors de la création (due à `UtilisateurId` non renseigné)
+- Mise à jour de `tsconfig.app.json` pour supporter `import.meta.env`
+
 ## [1.3.0] - 2025-05-25
 ### Ajouté
 - Modèle `DbContext` (`ApplicationDbContext`) avec EF Core et SQLite
