@@ -1,4 +1,4 @@
-# Projet FullStack d'Apprentissage : Scénarios 🎬
+# Projet FullStack : Scénarios Manager 🎬
 
 Ce projet est une application web fullstack développée avec :
 - **ASP.NET Core Web API** pour le back-end (C#)
