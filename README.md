@@ -31,6 +31,9 @@ Créer un site permettant de :
 - 🌐 Possibilité de marquer un scénario comme **public** (visible par tous) ou **privé**
 - 🛡️ Seul le créateur peut modifier ou supprimer ses propres scénarios
 - 🕒 Affichage des dates de création et modification
+- 🔐 Authentification avec JWT (connexion / déconnexion)
+- 🧭 Barre de navigation avec bouton de déconnexion
+
 
 ---
 

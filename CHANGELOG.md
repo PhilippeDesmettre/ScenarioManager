@@ -4,6 +4,18 @@ Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
 
+##[1.7.0] - 26/05/2025
+
+### Ajouté
+
+- Barre de navigation (`v-app-bar`) avec bouton de déconnexion
+- Masquage de la barre de navigation lorsque l’utilisateur n’est pas connecté
+
+### Corrigé
+
+- Problème d'utilisateur non pris en compte à la creation d'un scenario, corrigé en front et en back
+- Problème d'utilisateur non pris en compte à la creation d'un scenario, corrigé en front et en back
+
 ## [1.6.0] - 26/05/2025
 
 ### Ajouté
@@ -18,7 +30,6 @@ Toutes les modifications notables de ce projet seront documentées ici.
 
 - Problème de soumission silencieuse (champ manquant dans `newScenario`)
 - Rendu du switch et du formulaire de création
-- Problème d'utilisateur non pris en compte à la creation d'un scenario, corrigé en front et en back)
 
 ## [1.5.0] - 26/05/2025
 
