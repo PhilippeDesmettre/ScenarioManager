@@ -3,6 +3,12 @@
 Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
+## [1.7.0] - 26/05/2025
+### Ajouté
+- Barre de navigation (`v-app-bar`) avec bouton de déconnexion
+- Masquage de la barre de navigation lorsque l’utilisateur n’est pas connecté
+
+
 ## [1.6.0] - 26/05/2025
 ### Ajouté
 - Champ `estPublic` dans le modèle `Scenario` (back + front)
