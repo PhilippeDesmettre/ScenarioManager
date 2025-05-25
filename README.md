@@ -1,4 +1,4 @@
-# Projet FullStack d'Apprentissage : Scénarios 🎬
+Projet FullStack: Scénarios Manager 🎬
 
 Ce projet est une application web fullstack développée avec :
 - **ASP.NET Core Web API** pour le back-end (C#)
@@ -25,6 +25,10 @@ Créer un site permettant de :
 - 🔒 Sécurisation des routes API (`[Authorize]`)
 - 🚦 Redirection automatique selon l’état connecté
 - ⚙️ Token enregistré dans `localStorage` et injecté dans les requêtes
+- 🌐 Possibilité de marquer un scénario comme **public** (visible par tous) ou **privé**
+- 🛡️ Seul le créateur peut modifier ou supprimer ses propres scénarios
+- 🕒 Affichage des dates de création et modification
+
 
 
 
