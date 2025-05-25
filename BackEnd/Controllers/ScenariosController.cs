@@ -37,14 +37,17 @@ namespace BackEnd.Controllers
 
         [Authorize]
         [HttpGet]
+        [Authorize]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Scenario>>> GetScenarios()
         {
-            var scenarios = await _context.Scenarios
-                .Include(s => s.Utilisateur) // Optionnel : inclut l'utilisateur
-                .ToListAsync();
+            var userId = int.Parse(User.FindFirst("id")!.Value);
 
-            return Ok(scenarios);
+            return await _context.Scenarios
+                .Where(s => s.EstPublic || s.UtilisateurId == userId)
+                .ToListAsync();
         }
+
 
         [Authorize]
         [HttpGet("{id}")]
@@ -69,8 +72,8 @@ namespace BackEnd.Controllers
                 return BadRequest();
             }
 
-            // facultatif : remettre à jour l'heure si tu veux
-            // scenario.DateModification = DateTime.UtcNow;
+            // Maj date de modificaiton.
+            scenario.DateModification = DateTime.UtcNow;
 
             _context.Entry(scenario).State = EntityState.Modified;
 

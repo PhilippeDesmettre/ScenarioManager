@@ -9,6 +9,8 @@ namespace BackEnd.Models
         public string Genre { get; set; } = null!;
         public string Auteur { get; set; } = null!;
         public DateTime DateCreation { get; set; } = DateTime.UtcNow;
+        public DateTime DateModification { get; set; } = DateTime.UtcNow;
+        public bool EstPublic { get; set; } = false; 
 
         // Clé étrangère
         public int UtilisateurId { get; set; }

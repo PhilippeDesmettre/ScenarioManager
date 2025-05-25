@@ -3,6 +3,19 @@
 Toutes les modifications notables de ce projet seront documentées ici.
 
 ---
+## [1.6.0] - 26/05/2025
+### Ajouté
+- Champ `estPublic` dans le modèle `Scenario` (back + front)
+- Filtrage des scénarios visibles (publics + scénarios de l’utilisateur connecté)
+- Switch dans le formulaire pour marquer un scénario comme public
+- Affichage de la propriété `estPublic` dans la liste
+- Champ `dateModification` ajouté au modèle `Scenario` et affiché dans la vue
+
+### Corrigé
+- Problème de soumission silencieuse (champ manquant dans `newScenario`)
+- Rendu du switch et du formulaire de création
+
+
 ## [1.5.0] - 26/05/2025
 ### Ajouté
 - Authentification par JWT (register / login) côté back via `AuthController`

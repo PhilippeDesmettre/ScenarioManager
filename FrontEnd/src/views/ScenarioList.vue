@@ -20,6 +20,8 @@
         <v-list-item-subtitle>
           Auteur : {{ scenario.auteur }}<br />
           Créé le : {{ formatDate(scenario.dateCreation) }}
+           Modifié le : {{ formatDate(scenario.dateModification) }}
+
         </v-list-item-subtitle>
 
         <template #append>
@@ -40,6 +42,11 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
+          <v-switch
+  label="Public ?"
+  v-model="newScenario.estPublic"
+   color="success"
+/>
           <v-btn text @click="dialog = false">Annuler</v-btn>
           <v-btn color="primary" @click="onSubmit">
   {{ isEditing ? 'Sauvegarder' : 'Créer' }}
@@ -61,6 +68,8 @@ interface Scenario {
   genre: string
   auteur: string
   dateCreation?: string
+  dateModification?: string
+  estPublic: boolean
 }
 
 export default defineComponent({
@@ -72,10 +81,12 @@ export default defineComponent({
 
 
     const newScenario = ref<Scenario>({
-      titre: '',
-      genre: '',
-      auteur: ''
-    })
+  titre: '',
+  genre: '',
+  auteur: '',
+  estPublic: false
+})
+
 
     const fetchScenarios = async () => {
       try {
@@ -96,7 +107,13 @@ export default defineComponent({
 
     dialog.value = false
     isEditing.value = false
-    newScenario.value = { titre: '', genre: '', auteur: '' }
+    newScenario.value = {
+  titre: '',
+  genre: '',
+  auteur: '',
+  estPublic: false
+}
+
     await fetchScenarios()
   } catch (error) {
     console.error('Erreur lors de la soumission :', error)
