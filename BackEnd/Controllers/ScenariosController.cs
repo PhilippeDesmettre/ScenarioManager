@@ -25,14 +25,25 @@ namespace BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Scenario>> PostScenario(Scenario scenario)
         {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            var userId = int.Parse(userIdClaim.Value);
+            var user = await _context.Utilisateurs.FindAsync(userId);
+            if (user == null)
+                return NotFound("Utilisateur introuvable.");
+
             scenario.DateCreation = DateTime.UtcNow;
-            scenario.UtilisateurId = 1;
+            scenario.UtilisateurId = user.Id;
+            scenario.Auteur = user.Email; // ou user.Nom si tu ajoutes un pseudo
 
             _context.Scenarios.Add(scenario);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetScenario), new { id = scenario.Id }, scenario);
         }
+
 
 
         [Authorize]

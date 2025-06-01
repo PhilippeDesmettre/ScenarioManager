@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="space-between" align="center" class="mb-4">
       <h2>Liste des scénarios</h2>
-      <v-btn color="primary" @click="dialog = true" prepend-icon="mdi-plus">
+<v-btn color="primary" @click="onAjouter" prepend-icon="mdi-plus">
         Ajouter
       </v-btn>
     </v-row>
@@ -33,28 +33,46 @@
 
     <!-- DIALOGUE CRÉATION -->
     <v-dialog v-model="dialog" max-width="500">
-      <v-card>
-        <v-card-title>Créer un scénario</v-card-title>
-        <v-card-text>
-          <v-text-field label="Titre" v-model="newScenario.titre" />
-          <v-text-field label="Genre" v-model="newScenario.genre" />
-          <v-text-field label="Auteur" v-model="newScenario.auteur" />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-switch
-  label="Public ?"
-  v-model="newScenario.estPublic"
-   color="success"
-/>
-          <v-btn text @click="dialog = false">Annuler</v-btn>
-          <v-btn color="primary" @click="onSubmit">
-  {{ isEditing ? 'Sauvegarder' : 'Créer' }}
-</v-btn>
+  <v-card>
+    <!-- Titre dynamique -->
+    <v-card-title>{{ isEditing ? 'Modifier le scénario' : 'Créer un scénario' }}</v-card-title>
 
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+
+    <v-card-text>
+      <v-text-field
+        label="Titre"
+        v-model="newScenario.titre"
+        :rules="[v => !!v || 'Titre requis']"
+        required
+      />
+      <v-text-field
+        label="Genre"
+        v-model="newScenario.genre"
+        :rules="[v => !!v || 'Genre requis']"
+        required
+      />
+      <v-text-field
+        label="Auteur"
+        v-model="newScenario.auteur"
+        readonly
+      />
+    </v-card-text>
+
+    <v-card-actions>
+      <v-spacer />
+      <v-switch
+        label="Public ?"
+        v-model="newScenario.estPublic"
+        color="success"
+      />
+      <v-btn text @click="dialog = false">Annuler</v-btn>
+      <v-btn color="primary" @click="onSubmit">
+        {{ isEditing ? 'Sauvegarder' : 'Créer' }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+
   </v-container>
 </template>
 
@@ -87,6 +105,18 @@ export default defineComponent({
   estPublic: false
 })
 
+const onAjouter = () => {
+  isEditing.value = false
+  dialog.value = true
+  newScenario.value = {
+    titre: '',
+    genre: '',
+    auteur: localStorage.getItem('email') || '',
+    estPublic: false
+  }
+}
+
+
 
     const fetchScenarios = async () => {
       try {
@@ -100,10 +130,12 @@ export default defineComponent({
     const onSubmit = async () => {
   try {
     if (isEditing.value && newScenario.value.id) {
-      await api.put(`/scenarios/${newScenario.value.id}`, newScenario.value)
-    } else {
-      await api.post(`/scenarios`, newScenario.value)
-    }
+  await api.put(`/scenarios/${newScenario.value.id}`, newScenario.value)
+} else {
+  await api.post(`/scenarios`, newScenario.value,newScenario.value.auteur = localStorage.getItem('email') || 'Inconnu'
+)
+}
+
 
     dialog.value = false
     isEditing.value = false
@@ -128,6 +160,9 @@ export default defineComponent({
 }
 
 
+
+
+
     const onSupprimer = async (id: number) => {
       if (confirm('Confirmer la suppression ?')) {
         await api.delete(`/scenarios/${id}`)
@@ -138,7 +173,16 @@ export default defineComponent({
     const formatDate = (iso: string) =>
       new Date(iso).toLocaleDateString('fr-FR')
 
-    onMounted(fetchScenarios)
+    onMounted(() => {
+  fetchScenarios();
+
+  // Si on est en création, on définit l'auteur
+  const email = localStorage.getItem('email');
+  if (email) {
+    newScenario.value.auteur = email;
+  }
+});
+
 
     return {
       scenarios,
@@ -149,6 +193,7 @@ export default defineComponent({
       onSupprimer,
       onModifier,
       onSubmit,
+      onAjouter,
     }
   },
 })
